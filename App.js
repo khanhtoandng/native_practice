@@ -1,55 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ListView from './components/ListView';
+import DetailView from './components/DetailView';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [arrayList, setArrayList] = useState([1,2,3,4,5,6,7,8,9]);
-
-  const handleHold = removedValue => {
-    const removedArray = arrayList.filter((value) => {
-      return value !== removedValue;
-    })
-
-    setArrayList(removedArray);
-  }
-
-
-
+  
   return (
-    <View style={styles.container}>
-
-    <ScrollView>
-    { arrayList.map((el) => {
-      return (
-        <TouchableOpacity
-          key={el}
-          onLongPress={() => handleHold(el)}
-        >  
-          <Text style={styles.item}>{el}</Text>
-        </TouchableOpacity>
-      );
-    })
-    }
-    </ScrollView>  
-    
-
-    </View>
-  );
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='listview' component={ListView} options={{orientation: 'all'}} />
+        <Stack.Screen name='detailview' component={DetailView} options={{orientation: 'all'}} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: 40,
-    paddingHorizontal: 20
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-  item: {
-    marginTop: 24,
-    padding: 30,
-    backgroundColor: 'pink',
-    fontSize: 24
-  }
 });
